@@ -4,23 +4,26 @@ to communicate with the AskOmics API"""
 import os
 from os.path import basename 
 import requests
+import json
 
 class RequestApi():
     """RequestApi contain method to communicate with
     the AskOmics API"""
 
 
-
-    def __init__(self, url):
+    def __init__(self, url, username, apikey):
 
         self.url = url
         self.cookies = None
         self.headers = {'X-Requested-With': 'XMLHttpRequest'}
+        self.username = username
+        self.apikey = apikey
+        self.col_types = None
+        self.key_columns = [0] # Default value
+        self.path = None
 
-
-
-    def get_cookie(self, username, apikey):
-        """Get the session cookie of user
+    def set_cookie(self):
+        """set the session cookie of user
         
         [description]
         :param username: username
@@ -32,20 +35,19 @@ class RequestApi():
         """
 
 
-        json = {
-            'username_email': username,
-            'password': apikey
+        json_dict = {
+            'username_email': self.username,
+            'password': self.apikey
         }
 
         url = self.url + '/login'
 
-        response = requests.post(url, json=json)
+        response = requests.post(url, json=json_dict)
         cookies = response.cookies
 
         self.cookies = cookies
 
-
-    def upload_file(self, path):
+    def upload_file(self):
         """Upload a file into tmp dir of user
         
         [description]
@@ -55,14 +57,45 @@ class RequestApi():
 
         url = self.url + '/up/file'
         files = {
-            basename(path): open(path, 'rb')
+            basename(self.path): open(self.path, 'rb')
         }
 
         response = requests.post(url, files=files, cookies=self.cookies, headers=self.headers)
 
         return response.text
 
-    def ingtegrate_data(self, path, col_types, key_columns):
+    def set_key_columns(self, keycols):
+        """Set the key columns
+
+        [description]
+        :param keycols: list of key index
+        :type keycols: list
+        """
+
+        self.key_columns = keycols
+
+    def set_filepath(self, path):
+        """set the file path"""
+
+        self.path = path
+
+    def guess_col_types(self):
+        """Guess the colomns type of a csv file"""
+
+        url = self.url + '/guess_csv_header_type'
+
+        json_dict = {
+            'filename': basename(self.path)
+        }
+
+        response = requests.post(url, cookies=self.cookies, headers=self.headers, json=json_dict)
+
+
+        self.col_types = json.loads(response.text)['types']
+        self.col_types[0] = 'entity_start'
+
+
+    def integrate_data(self):
         """Integrate the csv file into the triplestore
         
         [description]
@@ -80,15 +113,14 @@ class RequestApi():
         url = self.url + '/load_data_into_graph'
 
 
-        json = {
-            'file_name': os.path.splitext(basename(path))[0],
-            'col_types': col_types,
+        json_dict = {
+            'file_name': os.path.splitext(basename(self.path))[0],
+            'col_types': self.col_types,
             'disabled_columns': [],
-            'key_columns': key_columns,
+            'key_columns': self.key_columns,
             'public': False
         }
 
-        response = requests.post(url, cookies=self.cookies, headers=self.headers, json=json)
+        response = requests.post(url, cookies=self.cookies, headers=self.headers, json=json_dict)
 
         return response.text
-
