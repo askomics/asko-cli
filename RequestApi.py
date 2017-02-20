@@ -42,7 +42,15 @@ class RequestApi():
 
         url = self.url + '/login'
 
-        response = requests.post(url, json=json_dict)
+        try:
+            response = requests.post(url, json=json_dict)
+        except Exception as exc:
+            print('Error: ' + str(exc))
+
+        # Check the passwd
+        if 'error' in json.loads(response.text):
+            print('Error:\n' + '\n'.join(json.loads(response.text)['error']))
+
         cookies = response.cookies
 
         self.cookies = cookies
@@ -61,6 +69,9 @@ class RequestApi():
         }
 
         response = requests.post(url, files=files, cookies=self.cookies, headers=self.headers)
+
+        if 'error' in json.loads(response.text):
+            print('Error:\n' + json.loads(response.text)['error'])
 
         return response.text
 
@@ -89,6 +100,9 @@ class RequestApi():
         }
 
         response = requests.post(url, cookies=self.cookies, headers=self.headers, json=json_dict)
+
+        if 'error' in json.loads(response.text):
+            print('Error:\n' + json.loads(response.text)['error'])
 
 
         self.col_types = json.loads(response.text)['types']
@@ -122,5 +136,8 @@ class RequestApi():
         }
 
         response = requests.post(url, cookies=self.cookies, headers=self.headers, json=json_dict)
+
+        if 'error' in json.loads(response.text):
+            print('Error:\n' + json.loads(response.text)['error'])
 
         return response.text
