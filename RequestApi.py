@@ -36,20 +36,23 @@ class RequestApi():
 
 
         json_dict = {
-            'username_email': self.username,
-            'password': self.apikey
+            'username': self.username,
+            'apikey': self.apikey
         }
 
-        url = self.url + '/login'
+        url = self.url + '/login_api'
 
         try:
             response = requests.post(url, json=json_dict)
         except Exception as exc:
             print('Error: ' + str(exc))
 
+        # print(response.text)
+
         # Check the passwd
         if 'error' in json.loads(response.text):
-            print('Error:\n' + '\n'.join(json.loads(response.text)['error']))
+            if json.loads(response.text)['error']:
+                print('Error:\n' + '\n'.join(json.loads(response.text)['error']))
 
         cookies = response.cookies
 
