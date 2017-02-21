@@ -31,5 +31,5 @@ Exemple
 TODO
 ----
 
-- [ ] Use a apikey insgtead of the user password
+- [x] Use a apikey insgtead of the user password
 - [ ] Query script
