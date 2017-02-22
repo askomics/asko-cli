@@ -1,6 +1,8 @@
 """Integragte a CSV/TSV file into a distant AskOmics"""
 
 import sys
+import os
+from os.path import basename 
 from RequestApi import RequestApi
 from ManageArg import ManageArg
 
@@ -18,9 +20,15 @@ def main():
 
     api.upload_file()
 
-    api.guess_col_types()
+    ext = os.path.splitext(basename(arg_dict['path']))[1].lower()
 
-    api.integrate_data()
+    if ext in ('.gff', '.gff2', '.gff3'):
+        api.integrate_gff(arg_dict['taxon'], arg_dict['entities'])
+    elif ext == '.ttl':
+        pass
+    else:
+        api.guess_col_types()
+        api.integrate_data()
 
 
 if __name__ == '__main__':

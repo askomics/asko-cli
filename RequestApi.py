@@ -2,9 +2,9 @@
 to communicate with the AskOmics API"""
 
 import os
-from os.path import basename 
-import requests
+from os.path import basename
 import json
+import requests
 
 class RequestApi():
     """RequestApi contain method to communicate with
@@ -128,5 +128,32 @@ class RequestApi():
 
         if 'error' in json.loads(response.text):
             print('Error:\n' + json.loads(response.text)['error'])
+
+        return response.text
+
+    def integrate_gff(self, taxon, entities):
+        """Integrate a gff into the triplestore
+
+        :param taxon: taxon
+        :type taxon: string
+        :param entities: list of entities to integrate
+        :type entities: list
+        :returns: response text
+        :rtype: string
+        """
+
+        url = self.url + '/load_gff_into_graph'
+
+        json_dict = {
+            'file_name': os.path.splitext(basename(self.path))[0],
+            'taxon': taxon,
+            'entities': entities,
+            'public': False
+        }
+
+        response = requests.post(url, cookies=self.cookies, headers=self.headers, json=json_dict)
+
+        if 'error' in json.loads(response.text):
+            print('ERROR: ' + json.loads(response.text)['error'])
 
         return response.text

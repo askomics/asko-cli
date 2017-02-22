@@ -15,13 +15,18 @@ class ManageArg():
     def usage():
         """Print the help message"""
 
-        print('Options:')
+        print('General options:')
         print('\t-h, --help: display this help')
         print('\t-a, --askomics: url of your distant askomics')
         print('\t-p, --port: the port of your distant askomics')
         print('\t-u, --user: your askomics username')
         print('\t-k, --apikey: your askomics apikey')
         print('\t-d, --data: path of the file to integrate')
+
+        # Optional option
+        print('\nGFF options:')
+        print('\t-e, --entities: entities to integrate (separated with coma \',\')')
+        print('\t-t, --taxon: the taxon')
 
     def get_args(self, argv):
         """Get the arguments of the script
@@ -36,14 +41,17 @@ class ManageArg():
 
         try:
             opts, argvs = getopt.getopt(
-                argv, 'ha:p:u:k:d:',
-                ['help=', 'askomics=', 'port=', 'username=', 'data='])
+                argv, 'ha:p:u:k:d:e:t:',
+                ['help=', 'askomics=', 'port=', 'username=', 'data=', 'entities=', 'taxon='])
         except getopt.GetoptError:
             self.usage()
             sys.exit(2)
         if not opts:
             self.usage()
             sys.exit(2)
+
+        entities_list = []
+        taxon = ''
 
         for opt, arg in opts:
             if opt in ('-h', '--help'):
@@ -59,6 +67,11 @@ class ManageArg():
                 api_key = str(arg)
             elif opt in ('-d', '--data'):
                 path = str(arg)
+            elif opt in ('-e', '--entities'):
+                entities_list = arg.split(',')
+            elif opt in ('-t', '--taxon'):
+                taxon = str(arg)
+
 
         if not asko_url or not username or not api_key or not path:
             self.usage()
@@ -76,5 +89,7 @@ class ManageArg():
         results['user'] = username
         results['apikey'] = api_key
         results['path'] = path
+        results['entities'] = entities_list
+        results['taxon'] = taxon
 
         return results
