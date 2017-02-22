@@ -1,7 +1,7 @@
 Asko-cli
 ========
 
-asko-cli provide python script to:
+asko-cli provide python scripts to:
 
 - Integrate datasets into a distant [AskOmics](https://github.com/askomics/askomics)
 - Launch a query into a distant [AskOmics](https://github.com/askomics/askomics) and get the results (TODO)
@@ -22,7 +22,7 @@ Options:
 
 Exemple
 
-    python3 integrate-cli.py -a http://localhost -p 6543 -u myusername -k mypasswd -d /path/to/file.tsv
+    python3 integrate-cli.py -a http://localhost -p 6543 -u myusername -k mYap1keY -d /path/to/file.tsv
 
 
 
@@ -31,5 +31,5 @@ Exemple
 TODO
 ----
 
-- [x] Use a apikey insgtead of the user password
+- [x] Use a apikey instead of the user password
 - [ ] Query script
