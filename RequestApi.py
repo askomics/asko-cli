@@ -24,12 +24,7 @@ class RequestApi():
 
     def set_cookie(self):
         """set the session cookie of user
-        
-        [description]
-        :param username: username
-        :type username: string
-        :param apikey: apikey of username
-        :type apikey: string
+
         :returns: session cookie of username
         :rtype: cookies
         """
@@ -60,8 +55,7 @@ class RequestApi():
 
     def upload_file(self):
         """Upload a file into tmp dir of user
-        
-        [description]
+
         :returns: the response dict
         :rtype: dict
         """
@@ -81,7 +75,6 @@ class RequestApi():
     def set_key_columns(self, keycols):
         """Set the key columns
 
-        [description]
         :param keycols: list of key index
         :type keycols: list
         """
@@ -114,16 +107,9 @@ class RequestApi():
 
     def integrate_data(self):
         """Integrate the csv file into the triplestore
-        
-        [description]
-        :param path: the path of the file
-        :type path: string
-        :param col_types: list of columns types
-        :type col_types: list
-        :param key_columns: the key columns index
-        :type key_columns: list
-        :returns: response status
-        :rtype: dict
+
+        :returns: response text
+        :rtype: string
         """
 
 
