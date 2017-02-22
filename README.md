@@ -11,7 +11,7 @@ asko-cli provide python scripts to:
 Integration
 -----------
 
-Options:
+General options:
 
 - -h, --help: display this help
 - -a, --askomics: url of your distant askomics
@@ -20,9 +20,16 @@ Options:
 - -k, --apikey: your askomics apikey
 - -d, --data: path of the file to integrate
 
+GFF options:
+
+- -e, --entities: entities to integrate (separated with coma ',')
+- -t, --taxon: the taxon
+
 Exemple
 
     python3 integrate-cli.py -a http://localhost -p 6543 -u myusername -k mYap1keY -d /path/to/file.tsv
+    python3 integrate-cli.py -a http://localhost -p 6543 -u myusername -k mYap1keY -d /path/to/file.gff -e transcript,gene,miRNA -t Arabidopsis_thaliana
+    python3 integrate-cli.py -a http://localhost -p 6543 -u myusername -k mYap1keY -d /path/to/file.ttl
 
 
 
