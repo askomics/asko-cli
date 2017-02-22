@@ -25,7 +25,7 @@ def main():
     if ext in ('.gff', '.gff2', '.gff3'):
         api.integrate_gff(arg_dict['taxon'], arg_dict['entities'])
     elif ext == '.ttl':
-        pass
+        api.integrate_ttl()
     else:
         api.guess_col_types()
         api.integrate_data()

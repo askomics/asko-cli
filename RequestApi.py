@@ -157,3 +157,25 @@ class RequestApi():
             print('ERROR: ' + json.loads(response.text)['error'])
 
         return response.text
+
+    def integrate_ttl(self):
+        """Integrate a ttl into the triplestore
+
+        :returns: response text
+        :rtype: string
+        """
+
+        url = self.url + '/load_ttl_into_graph'
+
+        json_dict = {
+            'file_name': os.path.splitext(basename(self.path))[0],
+            'public': False
+        }
+
+        response = requests.post(url, cookies=self.cookies, headers=self.headers, json=json_dict)
+
+        if 'error' in json.loads(response.text):
+            print('ERROR: ' + json.loads(response.text)['error'])
+
+        return response.text
+
