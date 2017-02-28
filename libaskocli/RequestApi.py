@@ -93,7 +93,7 @@ class RequestApi():
         url = self.url + '/guess_csv_header_type'
 
         json_dict = {
-            'filename': os.path.splitext(basename(self.path))[0]
+            'filename': basename(self.path)
         }
 
         response = requests.post(url, cookies=self.cookies, headers=self.headers, json=json_dict)
