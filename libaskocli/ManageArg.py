@@ -25,7 +25,7 @@ class ManageArg():
 
         # Optional
         print('\nOptional')
-        print('\t--file-type: the input file type (gff3, ttl or csv)')
+        print('\t--file-type: the input file type (gff, ttl or csv)')
 
         # GFF option
         print('\nGFF options:')
@@ -57,7 +57,7 @@ class ManageArg():
         entities_list = []
         taxon = ''
         asko_port = ''
-        file_type = ''
+        file_type = None
 
         for opt, arg in opts:
             if opt in ('-h', '--help'):

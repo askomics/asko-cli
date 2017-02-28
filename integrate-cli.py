@@ -12,7 +12,7 @@ def main():
     manage_arg = ManageArg()
     arg_dict = manage_arg.get_args(sys.argv[1:])
 
-    api = RequestApi(arg_dict['url'], arg_dict['user'], arg_dict['apikey'])
+    api = RequestApi(arg_dict['url'], arg_dict['user'], arg_dict['apikey'], arg_dict['file_type'])
 
     api.set_cookie()
 
@@ -22,7 +22,7 @@ def main():
 
     ext = os.path.splitext(basename(arg_dict['path']))[1].lower()
 
-    if ext in ('.gff', '.gff2', '.gff3') or arg_dict['file_type'] == 'gff3':
+    if ext in ('.gff', '.gff2', '.gff3') or arg_dict['file_type'] == 'gff':
         api.integrate_gff(arg_dict['taxon'], arg_dict['entities'])
     elif ext == '.ttl' or arg_dict['file_type'] == 'ttl':
         api.integrate_ttl()

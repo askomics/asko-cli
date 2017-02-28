@@ -11,7 +11,7 @@ class RequestApi():
     the AskOmics API"""
 
 
-    def __init__(self, url, username, apikey):
+    def __init__(self, url, username, apikey, file_type):
 
         self.url = url
         self.cookies = None
@@ -21,6 +21,7 @@ class RequestApi():
         self.col_types = None
         self.key_columns = [0] # Default value
         self.path = None
+        self.type = file_type
 
     def set_cookie(self):
         """set the session cookie of user
@@ -117,11 +118,12 @@ class RequestApi():
 
 
         json_dict = {
-            'file_name': os.path.splitext(basename(self.path))[0],
+            'file_name': basename(self.path),
             'col_types': self.col_types,
             'disabled_columns': [],
             'key_columns': self.key_columns,
-            'public': False
+            'public': False,
+            'forced_type': self.type
         }
 
         response = requests.post(url, cookies=self.cookies, headers=self.headers, json=json_dict)
@@ -145,10 +147,11 @@ class RequestApi():
         url = self.url + '/load_gff_into_graph'
 
         json_dict = {
-            'file_name': os.path.splitext(basename(self.path))[0],
+            'file_name': basename(self.path),
             'taxon': taxon,
             'entities': entities,
-            'public': False
+            'public': False,
+            'forced_type': self.type
         }
 
         response = requests.post(url, cookies=self.cookies, headers=self.headers, json=json_dict)
@@ -168,8 +171,9 @@ class RequestApi():
         url = self.url + '/load_ttl_into_graph'
 
         json_dict = {
-            'file_name': os.path.splitext(basename(self.path))[0],
-            'public': False
+            'file_name': basename(self.path),
+            'public': False,
+            'forced_type': self.type
         }
 
         response = requests.post(url, cookies=self.cookies, headers=self.headers, json=json_dict)
