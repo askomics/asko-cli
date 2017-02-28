@@ -3,8 +3,8 @@
 import sys
 import os
 from os.path import basename 
-from lib.RequestApi import RequestApi
-from lib.ManageArg import ManageArg
+from libaskocli.RequestApi import RequestApi
+from libaskocli.ManageArg import ManageArg
 
 def main():
     """Integragte a CSV/TSV file into a distant AskOmics"""
