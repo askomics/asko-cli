@@ -23,7 +23,11 @@ class ManageArg():
         print('\t-k, --apikey: your askomics apikey')
         print('\t-d, --data: path of the file to integrate')
 
-        # Optional option
+        # Optional
+        print('\nOptional')
+        print('\t--file-type: the input file type (gff3, ttl or csv)')
+
+        # GFF option
         print('\nGFF options:')
         print('\t-e, --entities: entities to integrate (separated with coma \',\')')
         print('\t-t, --taxon: the taxon')
@@ -42,7 +46,7 @@ class ManageArg():
         try:
             opts, argvs = getopt.getopt(
                 argv, 'ha:p:u:k:d:e:t:',
-                ['help=', 'askomics=', 'port=', 'username=', 'data=', 'entities=', 'taxon='])
+                ['help=', 'askomics=', 'port=', 'username=', 'data=', 'entities=', 'taxon=', 'file-type='])
         except getopt.GetoptError:
             self.usage()
             sys.exit(2)
@@ -52,6 +56,8 @@ class ManageArg():
 
         entities_list = []
         taxon = ''
+        asko_port = ''
+        file_type = ''
 
         for opt, arg in opts:
             if opt in ('-h', '--help'):
@@ -71,6 +77,8 @@ class ManageArg():
                 entities_list = arg.split(',')
             elif opt in ('-t', '--taxon'):
                 taxon = str(arg)
+            elif opt == '--file-type':
+                file_type = str(arg)
 
 
         if not asko_url or not username or not api_key or not path:
@@ -91,5 +99,6 @@ class ManageArg():
         results['path'] = path
         results['entities'] = entities_list
         results['taxon'] = taxon
+        results['file_type'] = file_type
 
         return results

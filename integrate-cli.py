@@ -22,9 +22,9 @@ def main():
 
     ext = os.path.splitext(basename(arg_dict['path']))[1].lower()
 
-    if ext in ('.gff', '.gff2', '.gff3'):
+    if ext in ('.gff', '.gff2', '.gff3') or arg_dict['file_type'] == 'gff3':
         api.integrate_gff(arg_dict['taxon'], arg_dict['entities'])
-    elif ext == '.ttl':
+    elif ext == '.ttl' or arg_dict['file_type'] == 'ttl':
         api.integrate_ttl()
     else:
         api.guess_col_types()
