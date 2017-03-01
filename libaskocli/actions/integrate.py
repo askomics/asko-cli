@@ -1,35 +1,54 @@
-"""Integragte a CSV/TSV file into a distant AskOmics"""
+"""Integrate a CSV/TSV file into a distant AskOmics"""
 
-import sys
 import os
-from os.path import basename 
-from libaskocli.RequestApi import RequestApi
-from libaskocli.ManageArg import ManageArg
+from os.path import basename
+import argparse
 
-def main():
-    """Integragte a CSV/TSV file into a distant AskOmics"""
+from libaskocli import askomics_auth
+from libaskocli import askomics_url
+from libaskocli import RequestApi
 
-    manage_arg = ManageArg()
-    arg_dict = manage_arg.get_args(sys.argv[1:])
+class Integrate(object):
+    """Integrate a CSV/TSV file into a distant AskOmics"""
 
-    api = RequestApi(arg_dict['url'], arg_dict['user'], arg_dict['apikey'], arg_dict['file_type'])
+    def run(self, args):
+        """Integrate a file into a distant askomics
 
-    api.set_cookie()
+        :param args: script's arguments
+        :type args: Namespace
+        """
 
-    api.set_filepath(arg_dict['path'])
+        parser = argparse.ArgumentParser(prog='askocli ' + self.__class__.__name__, description='Integrate data to a distant AskOmics')
+        askomics_auth(parser)
+        askomics_url(parser)
+        parser.add_argument('file', nargs='?', type=str, action="store", help="file to integrate")
+        parser.add_argument('--file-type', help='The file type')
 
-    api.upload_file()
+        parser.add_argument('-e', '--entities', nargs='*', help='List of entities to integrate')
+        parser.add_argument('-t', '--taxon', help='Taxon')
 
-    ext = os.path.splitext(basename(arg_dict['path']))[1].lower()
+        args = parser.parse_args(args)
 
-    if ext in ('.gff', '.gff2', '.gff3') or arg_dict['file_type'] == 'gff':
-        api.integrate_gff(arg_dict['taxon'], arg_dict['entities'])
-    elif ext == '.ttl' or arg_dict['file_type'] == 'ttl':
-        api.integrate_ttl()
-    else:
-        api.guess_col_types()
-        api.integrate_data()
+        if args.port:
+            url = args.askomics + ':' + args.port
+        else:
+            url = args.askomics
 
+        api = RequestApi(url, args.username, args.apikey, args.file_type)
 
-if __name__ == '__main__':
-    main()
+        api.set_cookie()
+
+        api.set_filepath(args.file)
+
+        api.upload_file()
+
+        ext = os.path.splitext(basename(args.file))[1].lower()
+
+        if ext in ('.gff', '.gff2', '.gff3') or args.file_type == 'gff':
+            api.integrate_gff(args.taxon, args.entities)
+        elif ext == '.ttl' or args.file_type == 'ttl':
+            api.integrate_ttl()
+        else:
+            api.guess_col_types()
+            api.integrate_data()
+
