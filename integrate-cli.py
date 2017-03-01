@@ -3,8 +3,8 @@
 import sys
 import os
 from os.path import basename 
-from RequestApi import RequestApi
-from ManageArg import ManageArg
+from libaskocli.RequestApi import RequestApi
+from libaskocli.ManageArg import ManageArg
 
 def main():
     """Integragte a CSV/TSV file into a distant AskOmics"""
@@ -12,7 +12,7 @@ def main():
     manage_arg = ManageArg()
     arg_dict = manage_arg.get_args(sys.argv[1:])
 
-    api = RequestApi(arg_dict['url'], arg_dict['user'], arg_dict['apikey'])
+    api = RequestApi(arg_dict['url'], arg_dict['user'], arg_dict['apikey'], arg_dict['file_type'])
 
     api.set_cookie()
 
@@ -22,9 +22,9 @@ def main():
 
     ext = os.path.splitext(basename(arg_dict['path']))[1].lower()
 
-    if ext in ('.gff', '.gff2', '.gff3'):
+    if ext in ('.gff', '.gff2', '.gff3') or arg_dict['file_type'] == 'gff':
         api.integrate_gff(arg_dict['taxon'], arg_dict['entities'])
-    elif ext == '.ttl':
+    elif ext == '.ttl' or arg_dict['file_type'] == 'ttl':
         api.integrate_ttl()
     else:
         api.guess_col_types()
