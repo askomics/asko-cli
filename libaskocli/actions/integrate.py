@@ -51,4 +51,3 @@ class Integrate(object):
         else:
             api.guess_col_types()
             api.integrate_data()
-
