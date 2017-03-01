@@ -1,12 +1,38 @@
-"""This module contain the requestApi class
-to communicate with the AskOmics API"""
+"""Contain functions to manage script arguments
+and RequestApi class to communicate with the distant
+AskOmics server"""
 
 import os
 from os.path import basename
 import json
 import requests
+# import logging
 
-class RequestApi():
+# logging.getLogger('requests').setLevel(logging.CRITICAL)
+# log = loggin.getLoger()
+
+def askomics_auth(parser):
+    """manage authentication arguments
+
+    :param parser: the parser
+    :type parser: argparse
+    """
+
+    parser.add_argument('-u', '--username', help='You AskOmics username', required=True)
+    parser.add_argument('-k', '--apikey', help='An API key associate with your account', required=True)
+
+def askomics_url(parser):
+    """manage askomics arguments
+
+    :param parser: the parser
+    :type parser: argparse
+    """
+
+    parser.add_argument('-a', '--askomics', help='AskOmics URL', required=True)
+    parser.add_argument('-p', '--port', help='AskOmics port')
+
+
+class RequestApi(object):
     """RequestApi contain method to communicate with
     the AskOmics API"""
 
