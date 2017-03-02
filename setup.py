@@ -1,24 +1,31 @@
+from os import listdir
 from setuptools import setup, find_packages
 
-from os import listdir
-
 setup(
-    name="askocli",
-    version='0.2',
-    description="Command line interface for a distant AskOmics",
-    author="Xavier Garnier",
-    author_email="xavier.garnier@irisa.fr",
-    url="https://github.com/xgaia/asko-cli",
+    name='askocli',
+    version='v0.2.1',
+    description='Command line interface for a distant AskOmics',
+    author='Xavier Garnier',
+    author_email='xavier.garnier@irisa.fr',
+    url='https://github.com/xgaia/asko-cli',
+    download_url='https://github.com/askomics/asko-cli/archive/v0.2.1.tar.gz',
     install_requires=['requests>=2.4.3'],
     packages=find_packages(),
     license='AGPL',
-    platforms="Posix; MacOS X; Windows",
+    platforms='Posix; MacOS X; Windows',
     scripts=['bin/' + f for f in listdir('bin')],
     classifiers=[
-        "Development Status :: 3 - Alpha",
-        "Intended Audience :: Developers",
-        "License :: OSI Approved :: AGPL License",
-        "Operating System :: OS Independent",
-        "Topic :: Scientific/Engineering",
-        "Programming Language :: Python :: 3"
+        'Development Status :: 3 - Alpha',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: GNU Affero General Public License v3',
+        'Operating System :: OS Independent',
+        'Topic :: Scientific/Engineering :: Bio-Informatics',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.0',
+        'Programming Language :: Python :: 3.1',
+        'Programming Language :: Python :: 3.2',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5'
     ])
