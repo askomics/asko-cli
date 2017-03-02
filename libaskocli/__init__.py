@@ -208,4 +208,3 @@ class RequestApi(object):
             print('ERROR: ' + json.loads(response.text)['error'])
 
         return response.text
-
