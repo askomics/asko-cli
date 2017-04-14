@@ -23,7 +23,11 @@ class Integrate(object):
         askomics_url(parser)
         parser.add_argument('file', nargs='?', type=str, action="store", help="file to integrate")
         parser.add_argument('--file-type', help='The file type')
+        parser.add_argument('--public', action='store_true')
 
+        parser.add_argument('--key-columns', nargs='*', help='List of the key columns index')
+        parser.add_argument('--disabled-columns', nargs='*', help='List of columns index to disable')
+        parser.add_argument('-c', '--columns', nargs='*', help='List of forced columns types')
         parser.add_argument('-e', '--entities', nargs='*', help='List of entities to integrate')
         parser.add_argument('-t', '--taxon', help='Taxon')
 
@@ -34,13 +38,15 @@ class Integrate(object):
         else:
             url = args.askomics
 
-        api = RequestApi(url, args.username, args.apikey, args.file_type)
+        api = RequestApi(url, args.apikey, args.file_type)
 
         api.set_cookie()
 
         api.set_filepath(args.file)
 
         api.upload_file()
+
+        api.set_visibility(args.public)
 
         ext = os.path.splitext(basename(args.file))[1].lower()
 
@@ -49,5 +55,12 @@ class Integrate(object):
         elif ext == '.ttl' or args.file_type == 'ttl':
             api.integrate_ttl()
         else:
-            api.guess_col_types()
+            if args.key_columns:
+                api.set_key_columns(args.key_columns)
+            if args.columns:
+                api.force_col_types(args.columns)
+            else:
+                api.guess_col_types()
+            if args.disabled_columns:
+                api.set_disabled_columns(args.disabled_columns)
             api.integrate_data()
