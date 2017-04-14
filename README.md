@@ -48,4 +48,6 @@ History
 - 0.3: APIkey
    - Use only the API key without the username to login
    - Better error managment
-   - Option to force the columns types
+   - Option `-c`, `--columns` to force the columns types
+   - Option `--key-columns` to set the key columns
+   - Option `--public` to integrate public data
