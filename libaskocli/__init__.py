@@ -104,8 +104,11 @@ class RequestApi(object):
         :param keycols: list of key index
         :type keycols: list
         """
+        new_list = []
+        for index in keycols:
+            new_list.append(int(index))
 
-        self.key_columns = keycols
+        self.key_columns = new_list
 
     def set_filepath(self, path):
         """set the file path"""
