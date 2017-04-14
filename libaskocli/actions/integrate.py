@@ -34,7 +34,7 @@ class Integrate(object):
         else:
             url = args.askomics
 
-        api = RequestApi(url, args.username, args.apikey, args.file_type)
+        api = RequestApi(url, args.apikey, args.file_type)
 
         api.set_cookie()
 

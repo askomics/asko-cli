@@ -1,10 +1,7 @@
-Asko-cli
+Askocli
 ========
 
-asko-cli provide python scripts to:
-
-- Integrate datasets into a distant [AskOmics](https://github.com/askomics/askomics)
-- Launch a query (json formatted) into a distant [AskOmics](https://github.com/askomics/askomics) and get the results (TODO)
+AskOcli allow an [AskOmics](https://github.com/askomics/askomics) user to integrate file with the command line into a distant [AskOmics](https://github.com/askomics/askomics).
 
 Requirment
 ----------
@@ -34,13 +31,20 @@ Usage example
 
 Integration
 
-    askocli integrate -a http://localhost -p 6543 -u username -k mYap1Key path/to/file.csv
-    askocli integrate -a http://localhost -p 6543 -u username -k mYap1Key path/to/file.csv
-    askocli integrate -a http://localhost -p 6543 -u username -k mYap1Key -e gene transcript -t Arabidopsis_thaliana path/to/file.gff
-    askocli integrate -a http://localhost -p 6543 -u username -k mYap1Key path/to/file.ttl
+    askocli integrate -a http://localhost -p 6543 -k mYap1Key path/to/file.csv
+    askocli integrate -a http://localhost -p 6543 -k mYap1Key path/to/file.csv
+    askocli integrate -a http://localhost -p 6543 -k mYap1Key -e gene transcript -t Arabidopsis_thaliana path/to/file.gff
+    askocli integrate -a http://localhost -p 6543 -k mYap1Key path/to/file.ttl
 
-TODO
-----
 
-- [ ] Query script
-- [ ] Better error managment
+History
+-------
+
+- 0.1: Initial release!
+    - Integrate CSV file into a distant AskOmics
+- 0.2: 
+   - Use API key instead of password
+   - Integrate GFF and TTL
+- 0.3: APIkey
+   - Use only the API key without the username to login
+   - Better error managment
