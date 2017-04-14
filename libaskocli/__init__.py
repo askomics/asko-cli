@@ -120,7 +120,6 @@ class RequestApi(object):
     def force_col_types(self, forced_types):
         """Force the columns types of a csv file
 
-        [description]
         :param forced_types: list of the forced types
         :type forced_types: list
         """
@@ -129,10 +128,22 @@ class RequestApi(object):
         self.col_types[0] = 'entity_start'
 
     def set_visibility(self, visibility):
+        """Set the visibility of the dataset
+
+        True for public and False for private
+
+        :param visibility: The visibility
+        :type visibility: boolean
+        """
 
         self.public = visibility
 
     def set_disabled_columns(self, disabled_columns):
+        """Set the diabled columns
+
+        :param disabled_columns: List if index to disable
+        :type disabled_columns: list
+        """
 
         new_list = []
         for index in disabled_columns:
