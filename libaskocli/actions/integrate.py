@@ -23,6 +23,7 @@ class Integrate(object):
         askomics_url(parser)
         parser.add_argument('file', nargs='?', type=str, action="store", help="file to integrate")
         parser.add_argument('--file-type', help='The file type')
+        parser.add_argument('--public', action='store_true')
 
         parser.add_argument('--key-columns', nargs='*', help='List of the key columns')
         parser.add_argument('-c', '--columns', nargs='*', help='List of forced columns types')
@@ -43,6 +44,8 @@ class Integrate(object):
         api.set_filepath(args.file)
 
         api.upload_file()
+
+        api.set_visibility(args.public)
 
         ext = os.path.splitext(basename(args.file))[1].lower()
 
