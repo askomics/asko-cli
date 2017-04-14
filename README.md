@@ -52,3 +52,5 @@ History
    - Option `--key-columns` to set the key columns
    - Option `--public` to integrate public data
    - Option `--disabled-columns` to don't integrate a columns of a TSV
+- 0.3.1
+   - FIX error message
