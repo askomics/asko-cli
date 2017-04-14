@@ -66,7 +66,7 @@ class RequestApi(object):
 
         if response.status_code != 200:
             raise Exception('Unexpected response from AskOmics when login: ' +
-                            response.status_code + '\n' + response.text)
+                            str(response.status_code) + '\n' + response.text)
 
         # Check the passwd
         if 'error' in json.loads(response.text):
@@ -93,7 +93,7 @@ class RequestApi(object):
 
         if response.status_code != 200:
             raise Exception('Unexpected response from AskOmics when uploading a file: ' +
-                            response.status_code + '\n' + response.text)
+                            str(response.status_code) + '\n' + response.text)
 
         if 'error' in json.loads(response.text):
             raise Exception('AskOmics error: ' + str(json.loads(response.text)['error']))
@@ -164,7 +164,7 @@ class RequestApi(object):
 
         if response.status_code != 200:
             raise Exception('Unexpected response from AskOmics when guessing col types: ' +
-                            response.status_code + '\n' + response.text)
+                            str(response.status_code) + '\n' + response.text)
 
         if 'error' in json.loads(response.text):
             raise Exception('AskOmics error: ' + str(json.loads(response.text)['error']))
@@ -198,7 +198,7 @@ class RequestApi(object):
 
         if response.status_code != 200:
             raise Exception('Unexpected response from AskOmics when integrate csv: ' +
-                            response.status_code + '\n' + response.text)
+                            str(response.status_code) + '\n' + response.text)
 
         if 'error' in json.loads(response.text):
             raise Exception('AskOmics error: ' + str(json.loads(response.text)['error']))
@@ -230,7 +230,7 @@ class RequestApi(object):
 
         if response.status_code != 200:
             raise Exception('Unexpected response from AskOmics when integrate gff: ' +
-                            response.status_code + '\n' + response.text)
+                            str(response.status_code) + '\n' + response.text)
 
         if 'error' in json.loads(response.text):
             raise Exception('AskOmics error: ' + str(json.loads(response.text)['error']))
@@ -256,7 +256,7 @@ class RequestApi(object):
 
         if response.status_code != 200:
             raise Exception('Unexpected response from AskOmics when integrate ttl: ' +
-                            response.status_code + '\n' + response.text)
+                            str(response.status_code) + '\n' + response.text)
 
         if 'error' in json.loads(response.text):
             raise Exception('AskOmics error: ' + str(json.loads(response.text)['error']))
