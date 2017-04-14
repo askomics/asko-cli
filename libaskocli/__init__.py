@@ -47,6 +47,7 @@ class RequestApi(object):
         self.path = None
         self.type = file_type
         self.public = False
+        self.disabled_columns = []
 
     def set_cookie(self):
         """set the session cookie of user
@@ -131,6 +132,14 @@ class RequestApi(object):
 
         self.public = visibility
 
+    def set_disabled_columns(self, disabled_columns):
+
+        new_list = []
+        for index in disabled_columns:
+            new_list.append(int(index))
+
+        self.disabled_columns = new_list
+
     def guess_col_types(self):
         """Guess the colomns type of a csv file"""
 
@@ -168,7 +177,7 @@ class RequestApi(object):
         json_dict = {
             'file_name': basename(self.path),
             'col_types': self.col_types,
-            'disabled_columns': [],
+            'disabled_columns': self.disabled_columns,
             'key_columns': self.key_columns,
             'public': self.public,
             'forced_type': self.type

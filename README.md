@@ -51,3 +51,4 @@ History
    - Option `-c`, `--columns` to force the columns types
    - Option `--key-columns` to set the key columns
    - Option `--public` to integrate public data
+   - Option `--disabled-columns` to don't integrate a columns of a TSV

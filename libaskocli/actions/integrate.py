@@ -25,7 +25,8 @@ class Integrate(object):
         parser.add_argument('--file-type', help='The file type')
         parser.add_argument('--public', action='store_true')
 
-        parser.add_argument('--key-columns', nargs='*', help='List of the key columns')
+        parser.add_argument('--key-columns', nargs='*', help='List of the key columns index')
+        parser.add_argument('--disabled-columns', nargs='*', help='List of columns index to disable')
         parser.add_argument('-c', '--columns', nargs='*', help='List of forced columns types')
         parser.add_argument('-e', '--entities', nargs='*', help='List of entities to integrate')
         parser.add_argument('-t', '--taxon', help='Taxon')
@@ -60,4 +61,6 @@ class Integrate(object):
                 api.force_col_types(args.columns)
             else:
                 api.guess_col_types()
+            if args.disabled_columns:
+                api.set_disabled_columns(args.disabled_columns)
             api.integrate_data()
