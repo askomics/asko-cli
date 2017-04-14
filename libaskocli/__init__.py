@@ -112,6 +112,17 @@ class RequestApi(object):
 
         self.path = path
 
+    def force_col_types(self, forced_types):
+        """Force the columns types of a csv file
+
+        [description]
+        :param forced_types: list of the forced types
+        :type forced_types: list
+        """
+
+        self.col_types = forced_types
+        self.col_types[0] = 'entity_start'
+
     def guess_col_types(self):
         """Guess the colomns type of a csv file"""
 

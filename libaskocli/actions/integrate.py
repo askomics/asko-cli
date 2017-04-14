@@ -24,10 +24,14 @@ class Integrate(object):
         parser.add_argument('file', nargs='?', type=str, action="store", help="file to integrate")
         parser.add_argument('--file-type', help='The file type')
 
+        parser.add_argument('-c', '--columns', nargs='*', help='List of forced columns types')
         parser.add_argument('-e', '--entities', nargs='*', help='List of entities to integrate')
         parser.add_argument('-t', '--taxon', help='Taxon')
 
         args = parser.parse_args(args)
+
+        print(args.columns)
+        print(type(args.columns))
 
         if args.port:
             url = args.askomics + ':' + args.port
@@ -49,5 +53,8 @@ class Integrate(object):
         elif ext == '.ttl' or args.file_type == 'ttl':
             api.integrate_ttl()
         else:
-            api.guess_col_types()
+            if args.columns:
+                api.force_col_types(args.columns)
+            else:
+                api.guess_col_types()
             api.integrate_data()
