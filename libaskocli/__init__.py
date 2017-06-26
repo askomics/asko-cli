@@ -28,7 +28,6 @@ def askomics_url(parser):
     """
 
     parser.add_argument('-a', '--askomics', help='AskOmics URL', required=True)
-    parser.add_argument('-p', '--port', help='AskOmics port')
 
 
 class RequestApi(object):
