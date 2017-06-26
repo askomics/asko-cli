@@ -33,10 +33,7 @@ class Integrate(object):
 
         args = parser.parse_args(args)
 
-        if args.port:
-            url = args.askomics + ':' + args.port
-        else:
-            url = args.askomics
+        url = args.askomics
 
         api = RequestApi(url, args.apikey, args.file_type)
 
