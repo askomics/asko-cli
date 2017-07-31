@@ -14,10 +14,10 @@ Installation
 
 Clone the repository
 
-    git clone https://github.com/askomics/asko-cli.git
-    cd asko-cli
+    git clone https://github.com/askomics/askocli.git
+    cd askocli
 
-Set up a virtual environment:
+Set up and activate a virtual environment:
 
     python3 -m venv venv
     source venv/bin/activate
@@ -31,7 +31,6 @@ Usage example
 
 Integration
 
-    askocli integrate -a http://localhost -p 6543 -k mYap1Key path/to/file.csv
     askocli integrate -a http://localhost -p 6543 -k mYap1Key path/to/file.csv
     askocli integrate -a http://localhost -p 6543 -k mYap1Key -e gene transcript -t Arabidopsis_thaliana path/to/file.gff
     askocli integrate -a http://localhost -p 6543 -k mYap1Key path/to/file.ttl

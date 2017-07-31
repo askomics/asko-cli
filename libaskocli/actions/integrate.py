@@ -18,7 +18,7 @@ class Integrate(object):
         :type args: Namespace
         """
 
-        parser = argparse.ArgumentParser(prog='askocli ' + self.__class__.__name__, description='Integrate data to a distant AskOmics')
+        parser = argparse.ArgumentParser(prog='askocli integrate', description='Integrate data to a distant AskOmics')
         askomics_auth(parser)
         askomics_url(parser)
         parser.add_argument('file', nargs='?', type=str, action="store", help="file to integrate")
@@ -30,6 +30,8 @@ class Integrate(object):
         parser.add_argument('-c', '--columns', nargs='*', help='List of forced columns types')
         parser.add_argument('-e', '--entities', nargs='*', help='List of entities to integrate')
         parser.add_argument('-t', '--taxon', help='Taxon')
+        parser.add_argument('--uri', help='Custom URI')
+        parser.add_argument('--headers', nargs='*', help='List of custom headers')
 
         args = parser.parse_args(args)
 
@@ -48,7 +50,7 @@ class Integrate(object):
         ext = os.path.splitext(basename(args.file))[1].lower()
 
         if ext in ('.gff', '.gff2', '.gff3') or args.file_type == 'gff':
-            api.integrate_gff(args.taxon, args.entities)
+            api.integrate_gff(args.taxon, args.entities, args.uri)
         elif ext == '.ttl' or args.file_type == 'ttl':
             api.integrate_ttl()
         else:
@@ -60,4 +62,5 @@ class Integrate(object):
                 api.guess_col_types()
             if args.disabled_columns:
                 api.set_disabled_columns(args.disabled_columns)
-            api.integrate_data()
+            api.set_headers(args.headers)
+            api.integrate_data(args.uri)
