@@ -53,3 +53,7 @@ History
    - Option `--disabled-columns` to don't integrate a columns of a TSV
 - 0.3.2
    - FIX error message
+- 0.4: Bed files integration
+	- Integration of Bed files
+	- Option `--uri` to specify an uri for the entity
+	- Option `--headers` to set custom headers for TSV files
