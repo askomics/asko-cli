@@ -24,14 +24,22 @@ class Integrate(object):
         parser.add_argument('file', nargs='?', type=str, action="store", help="file to integrate")
         parser.add_argument('--file-type', help='The file type')
         parser.add_argument('--public', action='store_true')
-
-        parser.add_argument('--key-columns', nargs='*', help='List of the key columns index')
-        parser.add_argument('--disabled-columns', nargs='*', help='List of columns index to disable')
-        parser.add_argument('-c', '--columns', nargs='*', help='List of forced columns types')
-        parser.add_argument('-e', '--entities', nargs='*', help='List of entities to integrate')
-        parser.add_argument('-t', '--taxon', help='Taxon')
         parser.add_argument('--uri', help='Custom URI')
-        parser.add_argument('--headers', nargs='*', help='List of custom headers')
+
+        # CSV args
+        parser.add_argument('--headers', nargs='*', help='List of custom headers  (csv)')
+        parser.add_argument('--key-columns', nargs='*', help='List of the key columns index  (csv)')
+        parser.add_argument('--disabled-columns', nargs='*', help='List of columns index to disable  (csv)')
+        parser.add_argument('-c', '--columns', nargs='*', help='List of forced columns types  (csv)')
+
+        # GFF args
+        parser.add_argument('-e', '--entities', nargs='*', help='List of entities to integrate  (gff)')
+
+        # GFF and BED args
+        parser.add_argument('-t', '--taxon', help='Taxon  (gff and bed)')
+
+        # BED args
+        parser.add_argument('-n', '--entity-name', help='Entity name  (bed)')
 
         args = parser.parse_args(args)
 
@@ -53,6 +61,8 @@ class Integrate(object):
             api.integrate_gff(args.taxon, args.entities, args.uri)
         elif ext == '.ttl' or args.file_type == 'ttl':
             api.integrate_ttl()
+        elif ext in ('.bed',) or args.file_type == 'bed':
+            api.integrate_bed(args.entity_name, args.taxon, args.uri)
         else:
             if args.key_columns:
                 api.set_key_columns(args.key_columns)
