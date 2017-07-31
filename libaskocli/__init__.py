@@ -6,6 +6,7 @@ import os
 from os.path import basename
 import json
 import requests
+import csv
 # import logging
 
 # logging.getLogger('requests').setLevel(logging.CRITICAL)
@@ -47,6 +48,7 @@ class RequestApi(object):
         self.type = file_type
         self.public = False
         self.disabled_columns = []
+        self.csv_headers = []
 
     def set_cookie(self):
         """set the session cookie of user
@@ -172,17 +174,39 @@ class RequestApi(object):
         self.col_types = json.loads(response.text)['types']
         self.col_types[0] = 'entity_start'
 
+    def set_headers(self, headers):
+        """Set the headers of the CSV file"""
 
-    def integrate_data(self):
+        if headers is not None:
+            self.csv_headers = headers
+            return
+
+        headers = []
+        with open(self.path, 'r', encoding="utf-8", errors="ignore") as tabfile:
+
+            # Get dialect
+            contents = tabfile.readline()
+            dialect = csv.Sniffer().sniff(contents, delimiters=';,\t ')
+            tabfile.seek(0)
+
+            # Load the file with reader
+            tabreader = csv.reader(tabfile, dialect=dialect)
+
+            # first line is header
+            headers = next(tabreader)
+            headers = [h.strip() for h in headers]
+
+        self.csv_headers = headers
+
+
+    def integrate_data(self, uri):
         """Integrate the csv file into the triplestore
 
         :returns: response text
         :rtype: string
         """
 
-
         url = self.url + '/load_data_into_graph'
-
 
         json_dict = {
             'file_name': basename(self.path),
@@ -190,8 +214,12 @@ class RequestApi(object):
             'disabled_columns': self.disabled_columns,
             'key_columns': self.key_columns,
             'public': self.public,
-            'forced_type': self.type
+            'forced_type': self.type,
+            'headers': self.csv_headers
         }
+
+        if uri is not None:
+            json_dict['uri'] = uri
 
         response = requests.post(url, cookies=self.cookies, headers=self.headers, json=json_dict)
 
@@ -204,13 +232,14 @@ class RequestApi(object):
 
         return response.text
 
-    def integrate_gff(self, taxon, entities):
+    def integrate_gff(self, taxon, entities, uri):
         """Integrate a gff into the triplestore
 
         :param taxon: taxon
         :type taxon: string
         :param entities: list of entities to integrate
         :type entities: list
+        :param uri: a custom URI for this entity
         :returns: response text
         :rtype: string
         """
@@ -225,10 +254,54 @@ class RequestApi(object):
             'forced_type': self.type
         }
 
+        if uri is not None:
+            json_dict['uri'] = uri
+
         response = requests.post(url, cookies=self.cookies, headers=self.headers, json=json_dict)
 
         if response.status_code != 200:
             raise Exception('Unexpected response from AskOmics when integrate gff: ' +
+                            str(response.status_code) + '\n' + response.text)
+
+        if 'error' in json.loads(response.text):
+            raise Exception('AskOmics error: ' + str(json.loads(response.text)['error']))
+
+        return response.text
+
+    def integrate_bed(self, entity_name, taxon, uri):
+        """Integrate a bed file into AskOmics
+
+        :param entity_name: The entityname, descibed in the bed file
+        :type entity_name: string
+        :param taxon: the taxon described into the bed file
+        :type taxon: string
+        :param uri: a custom URI for this entity
+        :type uri: string
+        :returns: response text
+        :rtype: string
+        """
+
+        url = self.url + '/load_bed_into_graph'
+
+        if taxon is None:
+            taxon = ''
+        if entity_name is None:
+            entity_name = ''
+
+        json_dict = {
+            'file_name': basename(self.path),
+            'taxon': taxon,
+            'entity_name': entity_name,
+            'public': self.public
+        }
+
+        if uri is not None:
+            json_dict['uri'] = uri
+
+        response = requests.post(url, cookies=self.cookies, headers=self.headers, json=json_dict)
+
+        if response.status_code != 200:
+            raise Exception('Unexpected response from AskOmics when integrate bed: ' +
                             str(response.status_code) + '\n' + response.text)
 
         if 'error' in json.loads(response.text):
