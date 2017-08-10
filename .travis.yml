@@ -10,7 +10,7 @@ script:
 deploy:
   provider: pypi
   user: xgaia
-  passord:
+  password:
     secure: fcrgROjpLTwG4y6yQO9HRZz342oiJmIjJOmO5stKo3NwVu+u3Qda5xQniZOxIb5ypMeFxzkc/kA+MJWNE11wTwigAS5zgXLUTPqiZVKnnxjwI6Q1M0+HHd+8kOnP+5o13k3SW2k5Hw8c3ep9CdeZ2q5+QuDKVHMmVstDYG5d30aT5Tkv5pMu85akgLWbE1SlERcmqDNIOvNTm9Cn4Rrbn/pZTibVXauPR/1qSrdTnJiU467A+k/SR9uNg1FT7Qhqf+QjF7lPoN+hKxBSFzhAFA60asDT3guIG+VrrtZonP0++qBJLz7ct9+YI1wGwwQQrwK2cIx2ILBQ2XjoX1iL7PG4oueBXK6/654dAV/o/pzDJSQi88BmmrHnEo6BIH2Bz81i5PDl4479xRDSJheOeD4cMIyqIaW/HO/lwx3TlsOHXstQkareV7PB5mVxvY6iHVBWDYgZK6SLw77JApXg4FhttJ9hipPaSQze2iCjhFlDYc1GCcCRuydR/XaUwZ3Q4PVElPwTzH+n/4MoUgcmCzpWRVl4hpcNhOcWg8QYMaWc3ZjYC2lkYJO6x8KL8fUP8ZEJ28j61O5RdRQiVNauLUmA3MLlcqQ6IWMilgOQet17qWQHrriclW66R7qs2S1WUm+XfxKiEqFnShjirKJSSTPh+xi0yjFlRDVoBWgyIf4=
   on:
     tags: true
