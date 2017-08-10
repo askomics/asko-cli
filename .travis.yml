@@ -1,0 +1,18 @@
+sudo: required
+language: python
+python:
+  - '3.5'
+cache: pip
+install:
+  - python setup.py install
+script:
+  - askocli -h
+deploy:
+  provider: pypi
+  user: xgaia
+  passord:
+    secure: g22Cyls024eIrru+cLWkYxeKGOc1oWfpD73q8E/koiD6/LtRt4GfX5fnVFnEace1ENFw3SI3ubT7c5uv3ayNgdvBXAWQ7dlClCehWegA8LRE9InLJokFirYUzaZMJHy1yHZa1CNx7gCUMTd1MrESHROR6FrToyZIoUN+N1r4MHl8DYS8NBG3mnSydLlx57tjhNBARgl7Lu8w11WMJ31gQaifwEM2NbCF2UOyqU/Hj8Ji8OJ8EWO+mCUq3jbIPhyf1Z2Pz9XXDCZMx8+8Yd8CfxBhZf7Oy48IKcIcarMEnOxXtm7jNNgnzV0e9R942JGqgg0Ye/vqZldNo9/W0Y23FwH3NML+jcFG4XL1gdqTEgkltvL7QIUPrwusTwNcDj0pDOn+4pHB8K3yjb8OcEcrgqZLQTMzSYCZxxbo7xzHBP62scPwtmaeN8ti6k7pun9VOWjn/5HrwhnGqU+1D7HXb/VIhvr3xQz+zZWzTC/Wfd6vLFsspw0kyfbGqi7UQWKwVjAHl/1zdseIWvEOqP8T6EKTVkfkBjckIla0V2DnV/FcYcDBPYLdYU2rnkan2erul4r4R2eRzUHcEdvjCDheFwvrAaMsRYFD330yt3gpLqryrK6aTnNAk3aeHnzlNzC2rL9Tf3mGySY51xMpm5p8clDe8JbaOdQEi9Duvba2zkc=
+  on:
+    tags: true
+    distributions: sdist bdist_wheel
+repo: askomics/askocli
