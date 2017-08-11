@@ -3,12 +3,12 @@ from setuptools import setup, find_packages
 
 setup(
     name='askocli',
-    version='0.4.2',
+    version='0.4.3',
     description='Command line interface for a distant AskOmics',
     author='Xavier Garnier',
     author_email='xavier.garnier@irisa.fr',
     url='https://github.com/askomics/askocli',
-    download_url='https://github.com/askomics/askocli/archive/0.4.2.tar.gz',
+    download_url='https://github.com/askomics/askocli/archive/0.4.3.tar.gz',
     install_requires=['requests>=2.4.3'],
     packages=find_packages(),
     license='AGPL',

@@ -292,7 +292,8 @@ class RequestApi(object):
             'file_name': basename(self.path),
             'taxon': taxon,
             'entity_name': entity_name,
-            'public': self.public
+            'public': self.public,
+            'forced_type': self.type
         }
 
         if uri is not None:
