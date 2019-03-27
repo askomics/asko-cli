@@ -57,13 +57,13 @@ class RequestApi(object):
         :rtype: cookies
         """
 
-        json_dict = {
-            'apikey': self.apikey
-        }
+        # json_dict = {
+        #     'apikey': self.apikey
+        # }
 
-        url = self.url + '/login_api'
+        url = self.url + '/login_api?key=' + self.apikey
 
-        response = requests.post(url, json=json_dict)
+        response = requests.get(url)
 
         if response.status_code != 200:
             raise Exception('Unexpected response from AskOmics when login: ' +
