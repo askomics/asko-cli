@@ -12,6 +12,12 @@ Requirment
 Installation
 ------------
 
+Install from pip
+
+    pip install askocli
+
+Or from sources;
+
 Clone the repository
 
     git clone https://github.com/askomics/askocli.git
@@ -31,9 +37,9 @@ Usage example
 
 Integration
 
-    askocli integrate -a http://localhost -p 6543 -k mYap1Key path/to/file.csv
-    askocli integrate -a http://localhost -p 6543 -k mYap1Key -e gene transcript -t Arabidopsis_thaliana path/to/file.gff
-    askocli integrate -a http://localhost -p 6543 -k mYap1Key path/to/file.ttl
+    askocli integrate -a http://localhost:6543 -k mYap1Key path/to/file.csv
+    askocli integrate -a http://localhost:6543 -k mYap1Key -e gene transcript -t Arabidopsis_thaliana path/to/file.gff
+    askocli integrate -a http://localhost:6543 -k mYap1Key path/to/file.ttl
 
 
 History
@@ -57,3 +63,4 @@ History
 	- Integration of Bed files
 	- Option `--uri` to specify an uri for the entity
 	- Option `--headers` to set custom headers for TSV files
+- 0.5: Compatibility with AskOmics 19.01.2
